@@ -167,6 +167,13 @@ Ctrl+Shift+P -> "Snippets: Configure Snippets" -> `cpp` and paste the contents.
 | `hqsort` | MPI + OpenMP hyperquicksort |
 | `bench2c` ... `bench2f` | Benchmarks (2c-2f) |
 
+## Espanso (works in any app, not just VS Code)
+
+`espanso/parallel_lab.yml` has the same programs as text-expander triggers. Copy it to
+`%APPDATA%\espanso\match\parallel_lab.yml` (espanso reloads automatically), then type a
+trigger anywhere: `:omp2a` ... `:omp2f`, `:mpi3a` ... `:mpi3e`, `:hqsort`, `:bench2c` ... `:bench2f`.
+The text is pasted via the clipboard, so editors don't auto-indent or auto-close brackets.
+
 ## Troubleshooting
 
 | Problem | Fix |
