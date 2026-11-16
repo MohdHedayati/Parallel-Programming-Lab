@@ -154,6 +154,19 @@ foreach ($f in 'bench_2c_matrix','bench_2d_primes','bench_2e_max','bench_2f_pi')
 Executables land in `build\`. Run them from the project folder, e.g. `.\build\2a_fork_join.exe`
 or `mpiexec -n 4 .\build\3a_rank_size.exe`.
 
+## VS Code snippets
+
+`snippets/cpp.json` has every program as a snippet (type the prefix in a `.cpp` file and press
+Tab). To install: copy it to `%APPDATA%\Code\User\snippets\cpp.json`, or in VS Code use
+Ctrl+Shift+P -> "Snippets: Configure Snippets" -> `cpp` and paste the contents.
+
+| Prefix | Program |
+|---|---|
+| `omp2a` ... `omp2f` | OpenMP 2a-2f |
+| `mpi3a` ... `mpi3e` | MPI 3a-3e |
+| `hqsort` | MPI + OpenMP hyperquicksort |
+| `bench2c` ... `bench2f` | Benchmarks (2c-2f) |
+
 ## Troubleshooting
 
 | Problem | Fix |
