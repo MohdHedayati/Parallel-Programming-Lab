@@ -18,6 +18,7 @@ Computing Lab Manual, plus benchmark programs for 2c–2f.
 | `3c_scatter.cpp` | MPI `Scatter` of "VJTI" | no |
 | `3d_reduce_max.cpp` | MPI `Reduce` max of 6 numbers | no |
 | `3e_ring_topology.cpp` | MPI ring topology | no |
+| `4_hyperquicksort.cpp` | Parallel hyperquicksort, MPI + OpenMP (10M ints, 4 processes) | no (optional args) |
 | `bench_2c_matrix.cpp` | Sequential vs parallel (2c) | no |
 | `bench_2d_primes.cpp` | More threads / more data / seq vs par (2d) | no |
 | `bench_2e_max.cpp` | More threads / more data / seq vs par (2e) | no |
@@ -87,6 +88,24 @@ mpic++ 3e_ring_topology.cpp -o 3e ; mpiexec -n 4 .\3e.exe
 | 3e | 2 or more | final sum = 0+1+…+(p−1), e.g. `6` for 4 processes |
 
 Output order from different processes is not deterministic; lines may appear shuffled.
+
+## Practical 4: Hyperquicksort (MPI + OpenMP)
+
+Sorts 10,000,000 random integers: rank 0 generates the data and scatters it over the
+processes (2.5M each with 4), each process sorts its chunk with an OpenMP task-parallel
+quicksort, then the hypercube rounds (pivot broadcast, swap halves with partner
+`rank ^ 2^i`, merge) leave the data globally sorted across ranks. Rank 0 gathers the
+result, checks it against a sequential `std::sort`, and prints the speedup.
+
+```powershell
+mpic++ -O2 -fopenmp 4_hyperquicksort.cpp -o 4_hyperquicksort
+mpiexec -n 4 ._hyperquicksort.exe
+```
+
+Optional arguments: `._hyperquicksort.exe [N] [threads_per_process]`, e.g.
+`mpiexec -n 4 ._hyperquicksort.exe 10000000 2`. By default the threads are
+(hardware threads / processes). The process count must be a power of 2 (1, 2, 4, 8, ...).
+Per-process piece sizes differ slightly after sorting; that is normal for hyperquicksort.
 
 ## Benchmarks (bench_2c … bench_2f)
 
